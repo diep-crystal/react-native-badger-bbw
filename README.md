@@ -1,300 +1,63 @@
-ShortcutBadger: [![Maven Central](https://maven-badges.herokuapp.com/maven-central/me.leolin/ShortcutBadger/badge.svg)](https://maven-badges.herokuapp.com/maven-central/me.leolin/ShortcutBadger)
-===================================
-
-The ShortcutBadger makes your Android App show the count of unread messages as a badge on your App shortcut!
-
-# Supported launchers:<br/>
-
-<table>
-    <tr>
-        <td width="130">
-            <h3>Sony</h3>
-            <br>
-            <img src="https://raw.github.com/leolin310148/ShortcutBadger/master/screenshots/ss_sony.png"/>
-        </td>
-        <td width="130">
-            <h3>Samsung</h3>
-            <br>
-            <img src="https://raw.github.com/leolin310148/ShortcutBadger/master/screenshots/ss_samsung.png"/>
-        </td>
-        <td width="130">
-            <h3>LG</h3>
-            <br>
-            <img src="https://raw.github.com/leolin310148/ShortcutBadger/master/screenshots/ss_lg.png"/>
-        </td>
-        <td width="130">
-            <h3>HTC</h3>
-            <br>
-            <img src="https://raw.github.com/leolin310148/ShortcutBadger/master/screenshots/ss_htc.png"/>
-        </td>
-    </tr>
-    <tr>
-        <td width="130">
-            <h3>Xiaomi</h3>
-            <br>
-            <img src="https://raw.github.com/leolin310148/ShortcutBadger/master/screenshots/ss_xiaomi.png"/>
-            <br>
-        </td>
-        <td width="130">
-            <h3>ASUS</h3>
-            <br>
-            <img src="https://raw.github.com/leolin310148/ShortcutBadger/master/screenshots/ss_asus.png"/>
-        </td>
-        <td width="130">
-            <h3>ADW</h3>
-            <br>
-            <img src="https://raw.github.com/leolin310148/ShortcutBadger/master/screenshots/ss_adw.png"/>
-        </td>
-        <td width="130">
-            <h3>APEX</h3>
-            <br>
-            <img src="https://raw.github.com/leolin310148/ShortcutBadger/master/screenshots/ss_apex.png"/>
-        </td>
-    <tr>
-        <td width="130">
-            <h3>NOVA</h3>
-            <br>
-            <img src="https://raw.github.com/leolin310148/ShortcutBadger/master/screenshots/ss_nova.png"/>
-        </td>
-        <td width="130">
-            <h3>Huawei</h3>
-            <br>
-            (Not Fully Support)
-            <br>
-            <img src="https://raw.github.com/leolin310148/ShortcutBadger/master/screenshots/ss_huawei.png"/>
-            <br>
-            (1.1.7+)
-        </td>
-        <td width="130">
-            <h3>ZUK</h3>
-            <br>
-            <img src="https://raw.github.com/leolin310148/ShortcutBadger/master/screenshots/ss_zuk.png"/>
-            <br>
-            (1.1.10+)
-        </td>
-        <td width="130">
-            <h3>OPPO</h3>
-            <br>
-            (Not Fully Support)
-            <br>
-            <img src="screenshots/ss_oppo.png?raw=true"/>
-            <br>
-            (1.1.10+)
-        </td>
-    </tr>
-    <tr>
-        <td width="130">
-            <h3>EverythingMe</h3>
-            <br>
-            <img src="https://raw.github.com/leolin310148/ShortcutBadger/master/screenshots/ss_evme.png"/>
-        </td>
-        <td width="130">
-            <h3>ZTE</h3>
-            <br>
-            <img src="https://raw.github.com/leolin310148/ShortcutBadger/master/screenshots/ss_zte.png"/>
-            <br>
-            (1.1.17+)
-        </td>
-        <td width="260" colspan="2">
-            <h3>KISS</h3>
-            <br>
-            <img src="https://raw.github.com/leolin310148/ShortcutBadger/master/screenshots/ss_kiss.png"/>
-            <br>
-            (1.1.18+)
-        </td>
-    </tr>
-    <tr>
-        <td width="130">
-            <h3>LaunchTime</h3>
-            <br>
-            <img src="https://raw.github.com/leolin310148/ShortcutBadger/master/screenshots/ss_launchtime.png"/>
-        </td>
-    </tr>
-</table>
+# react-native-shortcut-badge
 
-* Nova launcher with TeslaUnread, Apex launcher, ADW Launcher provided by [notz](https://github.com/notz)
-* Solid launcher provided by [MajeurAndroid](https://github.com/MajeurAndroid)
-* KISS Launcher provided by [alexander255](https://github.com/alexander255)
+Badge for the shortcut icon in your React Native App (Android & iOS).
 
-## About Xiaomi devices
-Xiaomi devices require extra setup with notifications, please read [wiki](https://github.com/leolin310148/ShortcutBadger/wiki/Xiaomi-Device-Support).
+iOS have native support for badges and this library uses the React Native [PushNotificationIOS](https://facebook.github.io/react-native/docs/pushnotificationios) module.
 
-## IsBadgeWorking? 
+In Android, this is a wrapper for the amazing [ShortcutBadger](https://github.com/leolin310148/ShortcutBadger) library.
 
-A tool for displaying your device, launcher & android version and testing whether ShortcutBadger
-works or not may be downloaded from
+ShortcutBadger is included in many notification libraries for React Native, rn-shortcut-badge offers an API and updates that do not depend on any of these libraries, although it can present the same drawbacks (before Android 8 there is no native support for badges, in Android 8 and later the badge is defined by the notifications).
 
-* Google Play [https://play.google.com/store/apps/details?id=me.leolin.isbadgeworking](https://play.google.com/store/apps/details?id=me.leolin.isbadgeworking)
-* The GitHub repository [https://github.com/leolin310148/IsBadgeWorking.Android/releases](https://github.com/leolin310148/IsBadgeWorking.Android/releases)
+**NOTE**: This is Work In Progress, not fully tested.
 
+## Setup
 
-USAGE
-===================================
-<br/>1. Add mavenCentral to your build script.
+```bash
+$ yarn add react-native-shortcut-badge
+$ react-native link react-native-shortcut-badge
+```
 
-        repositories {
-            mavenCentral()
-        }
-    
-<br/>2. Add dependencies for ShortcutBadger, it's available from maven now.
-        
-        dependencies {
-            implementation "me.leolin:ShortcutBadger:1.1.22@aar"
-        }
+If you are using [Proguard](https://stuff.mit.edu/afs/sipb/project/android/sdk/android-sdk-linux/tools/proguard/docs/), add this to your android/app/proguard-rules.pro
 
-<br/>3. Add the codes below:
+See https://github.com/leolin310148/ShortcutBadger/issues/46
 
-        int badgeCount = 1;
-        ShortcutBadger.applyCount(context, badgeCount); //for 1.1.4+
-        ShortcutBadger.with(getApplicationContext()).count(badgeCount); //for 1.1.3
-        
-<br/>4. If you want to remove the badge
-        
-        ShortcutBadger.removeCount(context); //for 1.1.4+
-        ShortcutBadger.with(getApplicationContext()).remove();  //for 1.1.3
-or
-        
-        ShortcutBadger.applyCount(context, 0); //for 1.1.4+
-        ShortcutBadger.with(getApplicationContext()).count(0); //for 1.1.3
-<br/>
-<br/>
-<br/>
-<br/>
+```
+-keep class me.leolin.shortcutbadger.impl.** { <init>(...); }
+```
 
+## Usage
 
-DEVELOP BY
-===================================
-[Leo Lin](https://github.com/leolin310148) - leolin310148@gmail.com
+```js
+import ShortcutBadge from 'react-native-shortcut-badge';
 
+ShortcutBadge.getCount((count) => {
+    ShortcutBadge.setCount(count + 1);
+});
+```
 
-ABOUT Google Play Developer Term Violations
-===================================
-If you receive a message from Google containing something like this:<br/> 
+### Properties
 
-        REASON FOR WARNING: Violation of section 4.4 of the Developer Distribution Agreement.
-        
-please use version 1.1.0+!
+Property | Type | Description
+-------- | ---- | -----------
+launcher | `string` or `null` | Name of the current launcher "home", or `null` if the launcher could not be detected.
+supported | `boolean` | Does ShortcutBadge have support for the current launcher/device?
 
+**NOTE:** The counter remains in the storage of the device even if the launcher is not supported.
 
+### Methods
 
-CHANGE LOG
-==========
-1.1.22:
+- `setCount(count: number) => Promise<boolean>`
 
-* Improve Oreo support (Thanks to [AlexStarc](https://github.com/AlexStarc))
+    Set the counter and update the badge.
 
-1.1.20:
+    Returns `true` if the operation succeeds.
 
-* Renamed default broadcast action; added Android Oreo support.
+- `getCount() => Promise<number>`
 
-1.1.19:
+    Returns the badge counter.
 
-* Fix multiple home package resolve issue.
+- `requestPermission(): Promise<boolean>`
 
-1.1.18:
+    Request permission for Badge, mainly for iOS.
 
-* Add Kill Launcher Support
-
-1.1.17:
-
-* Add ZTE Support
-
-1.1.16:
-
-* Improve Sony Launcher support. 
-
-1.1.15:
-
-* Add EverythingLauncher Support.
-
-1.1.14:
-
-* Fix for specific class of Samsung devices: with android 5, but without support of DefaultBadger
-* Remove Xiaomi from Badger and add Notification Support for Xiaomi devices. 
-
-1.1.13:
-
-* Fix XiaomiBadger (tested with RedMi Note4)
-
-1.1.12:
-
-* Handling Samsung badger for old devices and new devices.
-* Try to support newer Xiaomi (Not tested.)
-* Try to support Vivo (Not tested.)
-
-1.1.11:
-
-* Add OPPO Launcher Support
-
-1.1.10:
-
-* Add ZUK Launcher Support
-
-1.1.9:
-
-* Add SamsungBadger back for more Samsung devices support.
-
-1.1.8:
-
-* Remove SolidBadger, now solid launcher will use default badger.
-
-1.1.7:
-
-* Add Huawei launcher support.
-
-1.1.6:
-
-* Add support for new Sony Launchers.
-
-1.1.5:
-
-* `applyCount` will return if the Broadcast has been sent successfully.
-
-1.1.4:
-
-* Changed `ShortcutBadger.setBadge(context, badgeCount)` to `ShortcutBadger.applyCount(context, badgeCount);`
-
-1.1.3:
-
-* Deprecate SamsungBadger and LGBadger, those devices can use DefaultBadger.
-
-1.1.2:
-
-* Add support for `com.miui.mihome2`
-
-1.1.1:
-
-* Add DefaultBadger because some launchers use android.intent.action.BADGE_COUNT_UPDATE to update count.
-* Since the ShortcutBadgerException is helpless. So change api to set badge and never have to handle the exception again.
-
-1.1.0:
-
-* Remove Android Launcher support due to Google Play Developer Term Violation since 4.4.
-
-1.0.10:
-
-* Add Asus launcher support.
-
-1.0.9:
-
-* Add Xiaomi launcher support.
-
-
-LICENSE
-===================================
-<br/>
-        
-        Copyright 2014 Leo Lin
-        
-        Licensed under the Apache License, Version 2.0 (the "License");
-        you may not use this file except in compliance with the License.
-        You may obtain a copy of the License at
-        
-            http://www.apache.org/licenses/LICENSE-2.0
-        
-        Unless required by applicable law or agreed to in writing, software
-        distributed under the License is distributed on an "AS IS" BASIS,
-        WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-        See the License for the specific language governing permissions and
-        limitations under the License.
-<br/>
+    Return `true` if permission is granted.
