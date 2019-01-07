@@ -1,6 +1,8 @@
 package com.github.amarcruz.rnshortcutbadge;
 
+import android.annotation.TargetApi;
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.os.Build;
 import android.content.SharedPreferences;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.facebook.react.bridge.Promise;
@@ -25,6 +28,9 @@ public class RNShortcutBadgeModule extends ReactContextBaseJavaModule {
     private static final String TAG = "RNShortcutBadge";
     private static final String BADGE_FILE = "BadgeCountFile";
     private static final String BADGE_KEY = "BadgeCount";
+    private static final String CHANNEL_ID = "bbw_badge_chanel_id";
+    private static final String CHANNEL_NAME = "BBW Notifications";
+
 
     private NotificationManager mNotificationManager;
     private static int mNotificationId = 0;
@@ -57,14 +63,16 @@ public class RNShortcutBadgeModule extends ReactContextBaseJavaModule {
             if (context == null) {
                 context = mReactContext.getApplicationContext();
             }
+
+            mNotificationManager = (NotificationManager)
+                    mReactContext.getSystemService(Context.NOTIFICATION_SERVICE);
+
             int counter = mPrefs.getInt(BADGE_KEY, 0);
             supported = ShortcutBadger.applyCount(context, counter);
 
             if (!supported && Build.MANUFACTURER.equalsIgnoreCase("Xiaomi")) {
                 supported = true;
                 mIsXiaomi = true;
-                mNotificationManager = (NotificationManager)
-                        mReactContext.getSystemService(Context.NOTIFICATION_SERVICE);
             }
         } catch (Exception e) {
             Log.e(TAG, "Cannot initialize ShortcutBadger", e);
@@ -88,29 +96,34 @@ public class RNShortcutBadgeModule extends ReactContextBaseJavaModule {
             // Save the counter unconditionally
             mPrefs.edit().putInt(BADGE_KEY, count).apply();
 
-            if (!mSupported) {
-                promise.resolve(false);
-                return;
-            }
-
             Context context = getCurrentActivity();
             if (context == null) {
                 context = mReactContext.getApplicationContext();
             }
-            boolean ok;
+            //if android O
+//            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//                setAndroidOBadge(context, count);
+//            } else {
+                if (!mSupported) {
+                    promise.resolve(false);
+                    return;
+                }
 
-            if (mIsXiaomi) {
-                ok = setXiaomiBadge(context, count);
-            } else {
-                ok = ShortcutBadger.applyCount(context, count);
-            }
+                boolean ok;
 
-            if (ok) {
-                promise.resolve(true);
-            } else {
-                Log.d(TAG, "Cannot set badge.");
-                promise.resolve(false);
-            }
+                if (mIsXiaomi) {
+                    ok = setXiaomiBadge(context, count);
+                } else {
+                    ok = ShortcutBadger.applyCount(context, count);
+                }
+
+                if (ok) {
+                    promise.resolve(true);
+                } else {
+                    Log.e(TAG, "Cannot set badge.");
+                    promise.resolve(false);
+                }
+//            }
         } catch (Exception ex) {
             Log.e(TAG, "Error setting the badge", ex);
             promise.reject(ex);
@@ -150,6 +163,34 @@ public class RNShortcutBadgeModule extends ReactContextBaseJavaModule {
         mNotificationManager.notify(mNotificationId, notification);
 
         return true;
+    }
+
+    @TargetApi(Build.VERSION_CODES.O)
+    public void setAndroidOBadge(final Context context, final int count) {
+        int importance = NotificationManager.IMPORTANCE_LOW;
+        NotificationChannel mChannel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, importance);
+        mChannel.setShowBadge(count > 0);
+        NotificationManager mNotificationManager =
+                (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        if(mNotificationManager == null){
+            return;
+        }
+        mNotificationManager.createNotificationChannel(mChannel);
+
+        if (count == 0) {
+            mNotificationManager.cancel(mNotificationId);
+        } else {
+            //Temporary harding text in this function :D
+            //Will be removed after merge this lib into OneSignal
+            Notification notification = new NotificationCompat.Builder(context)
+                    .setContentTitle("New Messages")
+                    .setContentText("You've received " + count + " new messages.")
+                    .setSmallIcon(R.mipmap.ic_launcher)
+                    .setNumber(count)
+                    .build();
+
+            mNotificationManager.notify(mNotificationId, notification);
+        }
     }
 
     /**
